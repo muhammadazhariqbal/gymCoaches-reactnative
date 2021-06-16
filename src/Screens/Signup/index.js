@@ -4,9 +4,9 @@ import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView,
 import headIcon from '../../../assets/ic_login.png';
 import { Foundation, Entypo, AntDesign } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
-import Auth from '../../Config/index';
 
-export default function SignupScreen({ navigation }) {
+export default function SignupScreen({ navigation, route }) {
+    
     navigation.setOptions({ tabBarVisible: false })
 
     const [onFocusValue, setOnFocusValue] = useState('false')
@@ -77,10 +77,10 @@ export default function SignupScreen({ navigation }) {
                             console.log('TRUEEEE')
                             setShowLoader(true)
                             setTimeout(() => {
-                                console.log('FALSE')
                                 setShowLoader(false)
-                                Auth(true)
-                                
+                                route.params.x(true)
+
+
                             }, 2000)
                         }}>
                         <Text style={{ color: "#fff", fontFamily: 'OpenSans', fontSize: 15 }}>SIGN UP </Text>
@@ -107,10 +107,7 @@ export default function SignupScreen({ navigation }) {
         </View>
     );
 }
-// secondarycolor : #101010
-// primarycolor : ##f3b149
-//shadow : rgba(246,246,246,255)
-// para color : #cecece
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

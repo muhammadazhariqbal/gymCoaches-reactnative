@@ -6,7 +6,7 @@ import { Entypo, Ionicons, AntDesign } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import Auth from '../../Config';
 
-export default function HomeCoachesDetailsScreen() {
+export default function HomeCoachesDetailsScreen({navigations, route}) {
     const [loaded] = useFonts({
         OpenSans: require('../../../assets/Open_Sans/OpenSans-Regular.ttf')
     });
@@ -15,7 +15,7 @@ export default function HomeCoachesDetailsScreen() {
             <View style={styles.header}>
                 <Text style={styles.head}>All Coaches</Text>
                 <TouchableOpacity
-                    onPress={() => { Auth(false) }}>
+                    onPress={() => { route.params.x(false) }}>
                     <AntDesign name="logout" size={24} color="##f3b149" />
                 </TouchableOpacity>
             </View>
@@ -37,6 +37,7 @@ export default function HomeCoachesDetailsScreen() {
                             </View>
                         </View>
                     </View>
+                    
                 </View>
             </ScrollView>
         </View>

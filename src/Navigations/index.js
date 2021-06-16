@@ -1,21 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LoginScreen from '../Screens/Login';
 import SignupScreen from '../Screens/Signup';
 import HomeGymDetailsScreen from '../Screens/HomeGymDetailsScreen';
 import HomeCoachesDetailsScreen from '../Screens/HomeCoachesDetailsScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Auth from '../Config';
+
+
 export default function Navigations() {
 
     const Tab = createBottomTabNavigator()
     const [isUser, setIsUser] = useState('')
-    Auth(isUser)
-        .then(res => {
-            setIsUser(res)
-            console.log(res)
-        })
+   
+  
+        const auth = (value) =>{
+            console.log(`auth == ${value}`)
+            setIsUser(value)
+        }
+   
+    isUser ? console.log('user is here') : console.log('user is not here')
 
     return (
         <NavigationContainer>
@@ -31,12 +35,12 @@ export default function Navigations() {
 
                 {!isUser ?
                     <>
-                        <Tab.Screen name="signUp" component={SignupScreen} />
-                        <Tab.Screen name="logIn" component={LoginScreen} />
+                        <Tab.Screen name="signUp" component={SignupScreen} initialParams={{x:auth}} />
+                        <Tab.Screen name="logIn" component={LoginScreen} initialParams={{x:auth}}  />
                     </> :
                     <>
-                        <Tab.Screen name="homegym" component={HomeGymDetailsScreen} options={{ title: 'GYMS' }} />
-                        <Tab.Screen name="homecoach" component={HomeCoachesDetailsScreen} options={{ title: 'COACHES' }} />
+                        <Tab.Screen name="homegym" component={HomeGymDetailsScreen} options={{ title: 'GYMS' }} initialParams={{x:auth}}  />
+                        <Tab.Screen name="homecoach" component={HomeCoachesDetailsScreen} options={{ title: 'COACHES' }}  initialParams={{x:auth}} />
                     </>}
             </Tab.Navigator>
         </NavigationContainer>

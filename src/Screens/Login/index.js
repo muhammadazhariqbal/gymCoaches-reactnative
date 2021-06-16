@@ -6,7 +6,7 @@ import { Foundation, Entypo, AntDesign } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import Auth from '../../Config';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({ navigation, route }) {
     navigation.setOptions({ tabBarVisible: false })
 
     const [showloader, setShowLoader] = useState(false)
@@ -55,9 +55,9 @@ export default function LoginScreen({ navigation }) {
                             setShowLoader(true)
 
                             setTimeout(() => {
-                                console.log('FALSE')
+                               route.params.x(true)
                                 setShowLoader(false)
-                                Auth(true)
+                               
                               
                             }, 2000)
                         }}>
