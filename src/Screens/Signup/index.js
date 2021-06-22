@@ -139,8 +139,8 @@ const styles = StyleSheet.create({
         padding: 15
     },
     image: {
-        height: 390,
-        width: 300,
+        height: 220,
+        width: 180,
         marginTop: 20
     },
     inputContainer: {

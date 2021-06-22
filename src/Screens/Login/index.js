@@ -2,13 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import headIcon from '../../../assets/ic_login.png';
-import { Foundation, Entypo, AntDesign } from '@expo/vector-icons';
+import { Foundation, Entypo, AntDesign, Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import Auth from '../../Config';
 
 export default function LoginScreen({ navigation, route }) {
     navigation.setOptions({ tabBarVisible: false })
-
     const [showloader, setShowLoader] = useState(false)
     const [onFocusValue, setOnFocusValue] = useState('false')
     const [loaded] = useFonts({
@@ -40,8 +39,9 @@ export default function LoginScreen({ navigation, route }) {
                     <View style={onFocusValue === 'pswrdfocus' ? styles.onfocus : styles.inputContainer}>
                         {onFocusValue === 'pswrdfocus' ? <Text style={styles.label}>PASSWORD</Text> : null}
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "space-around" }}>
-                            <Foundation name="mail" size={24} color="gray" />
+                            <Foundation name="lock" size={24} color="gray" />
                             <TextInput
+                                secureTextEntry
                                 onFocus={() => { setOnFocusValue('pswrdfocus') }}
                                 onBlur={() => { setOnFocusValue(false) }}
                                 style={styles.input}
@@ -51,14 +51,10 @@ export default function LoginScreen({ navigation, route }) {
                     {!showloader ? <TouchableOpacity
                         style={styles.btn}
                         onPress={() => {
-                            console.log('TRUEEEE')
                             setShowLoader(true)
-
-                            setTimeout(() => {
+                         setTimeout(() => {
                                route.params.x(true)
                                 setShowLoader(false)
-                               
-                              
                             }, 2000)
                         }}>
                         <Text style={{ color: "#fff", fontFamily: 'OpenSans', fontSize: 15 }}>LOGIN </Text>
@@ -118,8 +114,8 @@ const styles = StyleSheet.create({
         padding: 15
     },
     image: {
-        height: 390,
-        width: 300,
+        height: 250,
+        width: 200,
         marginTop: 20
     },
     inputContainer: {
