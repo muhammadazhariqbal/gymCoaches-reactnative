@@ -4,8 +4,7 @@ import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView,
 import headIcon from '../../../assets/ic_login.png';
 import { Foundation, Entypo, AntDesign, Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
-import Auth from '../../Config';
-
+import { signInUser, signUpUser } from '../../Config/firebase';
 export default function LoginScreen({ navigation, route }) {
     navigation.setOptions({ tabBarVisible: false })
     const [showloader, setShowLoader] = useState(false)
@@ -13,7 +12,8 @@ export default function LoginScreen({ navigation, route }) {
     const [loaded] = useFonts({
         OpenSans: require('../../../assets/Open_Sans/OpenSans-Regular.ttf')
     });
-
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -33,7 +33,8 @@ export default function LoginScreen({ navigation, route }) {
                                 onFocus={() => { setOnFocusValue('emailfocus') }}
                                 onBlur={() => { setOnFocusValue(false) }}
                                 style={styles.input}
-                                placeholder="Email" />
+                                placeholder="Email"
+                                onChangeText={(text) => { setEmail(text) }} />
                         </View>
                     </View>
                     <View style={onFocusValue === 'pswrdfocus' ? styles.onfocus : styles.inputContainer}>
@@ -45,17 +46,18 @@ export default function LoginScreen({ navigation, route }) {
                                 onFocus={() => { setOnFocusValue('pswrdfocus') }}
                                 onBlur={() => { setOnFocusValue(false) }}
                                 style={styles.input}
-                                placeholder="Password" />
+                                placeholder="Password"
+                                onChangeText={(text) => { setPassword(text) }}
+                                secureTextEntry />
                         </View>
                     </View>
                     {!showloader ? <TouchableOpacity
                         style={styles.btn}
                         onPress={() => {
                             setShowLoader(true)
-                         setTimeout(() => {
-                               route.params.x(true)
-                                setShowLoader(false)
-                            }, 2000)
+                            signInUser(email, password)
+                            setShowLoader(false)
+
                         }}>
                         <Text style={{ color: "#fff", fontFamily: 'OpenSans', fontSize: 15 }}>LOGIN </Text>
                         <AntDesign name="arrowright" size={15} color="#FFF" />

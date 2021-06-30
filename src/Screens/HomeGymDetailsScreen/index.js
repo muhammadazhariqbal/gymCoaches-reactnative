@@ -1,25 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import React  from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Linking, Platform } from 'react-native';
 import { Entypo, Ionicons, AntDesign } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import StarRating from 'react-native-star-rating';
-
+import { auth } from '../../Config/firebase';
 
 export default function HomeGymDetailsScreen({ navigation, route }) {
     const [loaded] = useFonts({
         OpenSans: require('../../../assets/Open_Sans/OpenSans-Regular.ttf')
     });
-   
-    
-    
     return (
         <View style={styles.container}>
 
             <View style={styles.header}>
                 <Text style={styles.head}>All Gyms</Text>
                 <TouchableOpacity
-                    onPress={() => { route.params.x(false) }}>
+                    onPress={() => { auth.signOut() }}>
                     <AntDesign name="logout" size={24} color="#f3b149" />
                 </TouchableOpacity>
             </View>
@@ -56,17 +53,17 @@ export default function HomeGymDetailsScreen({ navigation, route }) {
                             <TouchableOpacity
                                 style={styles.btn}
                                 onPress={() => {
-                                    
 
-                                        navigation.navigate('details', {
-                                           name: '9ROUND',
-                                            address:'MQFH+HF, Isa Al Malaji, Al Safa, Riyadh 12853, Saudi Arabia',
-                                            phoneNo:'966 9200 19910',
-                                            rating: 4.4,
-                                           status: 'OPEN'
-                                        })
 
-                                    }}>
+                                    navigation.navigate('details', {
+                                        name: '9ROUND',
+                                        address: 'MQFH+HF, Isa Al Malaji, Al Safa, Riyadh 12853, Saudi Arabia',
+                                        phoneNo: '966 9200 19910',
+                                        rating: 4.4,
+                                        status: 'OPEN'
+                                    })
+
+                                }}>
                                 <Text style={{ color: '#fff' }}>VIEW MORE</Text>
                             </TouchableOpacity>
                         </View>
@@ -105,14 +102,14 @@ export default function HomeGymDetailsScreen({ navigation, route }) {
                             <TouchableOpacity
                                 style={styles.btn}
                                 onPress={() => {
-                                    
-                                    navigation.navigate('details',{
-                                       name: 'Fitness Code Sport Center',
+
+                                    navigation.navigate('details', {
+                                        name: 'Fitness Code Sport Center',
                                         address: 'Sheikh Abdul Rahman Ibn Furayyan,As Suwaidi Al Gharabi,',
-                                       phoneNo: '966 55 220 2619',
-                                        rating :3.8,
-                                        status:'CLOSE',
-                                        screenMode:'gym'
+                                        phoneNo: '966 55 220 2619',
+                                        rating: 3.8,
+                                        status: 'CLOSE',
+                                        screenMode: 'gym'
                                     })
                                 }}
                             >
@@ -161,8 +158,8 @@ export default function HomeGymDetailsScreen({ navigation, route }) {
                                         status: 'OPEN',
                                         rating: 3.8,
                                         phoneNo: '966 11 230 4464',
-                                        screenMode:'gym'
-                                        
+                                        screenMode: 'gym'
+
 
                                     })
                                 }}
@@ -212,7 +209,7 @@ export default function HomeGymDetailsScreen({ navigation, route }) {
                                         status: 'CLOSED',
                                         rating: 4.2,
                                         phoneNo: '966 54 0427852',
-                                        screenMode:'gym'
+                                        screenMode: 'gym'
                                     })
                                 }}
                             >
@@ -261,7 +258,7 @@ export default function HomeGymDetailsScreen({ navigation, route }) {
                                         status: 'OPEN',
                                         rating: 3.9,
                                         phoneNo: '966 54 042 8882',
-                                        screenMode:'gym'
+                                        screenMode: 'gym'
                                     })
                                 }}
                             >
@@ -310,7 +307,7 @@ export default function HomeGymDetailsScreen({ navigation, route }) {
                                         status: 'OPEN',
                                         rating: 4.3,
                                         phoneNo: '966 50 885 9966',
-                                        screenMode:'gym'
+                                        screenMode: 'gym'
                                     })
                                 }}
                             >
@@ -359,7 +356,7 @@ export default function HomeGymDetailsScreen({ navigation, route }) {
                                         status: 'OPEN',
                                         rating: 3.8,
                                         phoneNo: '966 9200 07576',
-                                        screenMode:'gym'
+                                        screenMode: 'gym'
                                     })
                                 }}
                             >

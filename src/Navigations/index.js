@@ -8,22 +8,25 @@ import DetailScreen from '../Screens/DetailScreen'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ProfileScreen from '../Screens/ProfileScreen';
-import { Entypo, Ionicons,MaterialCommunityIcons, AntDesign,FontAwesome5,FontAwesome } from '@expo/vector-icons';
+import { Entypo, Ionicons, MaterialCommunityIcons, AntDesign, FontAwesome5, FontAwesome } from '@expo/vector-icons';
+import { auth } from '../Config/firebase';
 
 export default function Navigations() {
-
+    useEffect(() => {
+        auth.onAuthStateChanged((user) => {
+            user ? setIsUser(user) : setIsUser(false)
+        })
+    }, [])
     const Tab = createBottomTabNavigator()
-    const [isUser, setIsUser] = useState('')
+    const [isUser, setIsUser] = useState(null)
 
 
-    const auth = (value) => {
-        console.log(`auth == ${value}`)
-        setIsUser(value)
+
+
+    if (isUser == null) {
+        return null
+
     }
-
-
-
-    isUser ? console.log('user is here') : console.log('user is not here')
 
     return (
         <NavigationContainer>
@@ -76,7 +79,7 @@ export default function Navigations() {
                                     <FontAwesome name="user" size={24} color="#f3b149" />
                                 )
                             }}
-                            initialParams={{ x: auth }} />
+                            initialParams={{ userID: isUser }} />
 
                     </>
 

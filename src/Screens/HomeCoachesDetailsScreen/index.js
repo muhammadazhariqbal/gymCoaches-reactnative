@@ -4,7 +4,8 @@ import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'rea
 import { Entypo, Ionicons, AntDesign } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import StarRating from 'react-native-star-rating';
-export default function HomeCoachesDetailsScreen({navigation, route}) {
+import { auth } from '../../Config/firebase';
+export default function HomeCoachesDetailsScreen({ navigation, route }) {
     const [loaded] = useFonts({
         OpenSans: require('../../../assets/Open_Sans/OpenSans-Regular.ttf')
     });
@@ -13,19 +14,19 @@ export default function HomeCoachesDetailsScreen({navigation, route}) {
             <View style={styles.header}>
                 <Text style={styles.head}>All Coaches</Text>
                 <TouchableOpacity
-                    onPress={() => { route.params.x(false) }}>
+                    onPress={() => { auth.signOut() }}>
                     <AntDesign name="logout" size={24} color="#f3b149" />
                 </TouchableOpacity>
             </View>
             <ScrollView style={{ flex: 6 }} showsVerticalScrollIndicator={false}>
                 <View style={styles.main}>
 
-                <View style={styles.card}>
+                    <View style={styles.card}>
                         <Image style={styles.image} source={require('../../../assets/CoachImages/HaniShobaki.jpg')} />
                         <View style={styles.details}>
                             <Text style={styles.head}>Hani Shobaki</Text>
                             <Text style={styles.para}> King Saud Street, Al Olaya, Riyadh 11411, Saudi Arabia</Text>
-                            
+
                             <StarRating
                                 fullStarColor="#f3b149"
                                 starSize={20}
@@ -49,30 +50,30 @@ export default function HomeCoachesDetailsScreen({navigation, route}) {
                                     <Ionicons name="call" size={20} color="#f3b149" />
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity 
-                            style={styles.btn}
-                            onPress={() => {
-                                navigation.navigate('details', {
-                                    name: 'Hani Shobaki',
-                                    address: 'King Saud Street, Al Olaya, Riyadh 11411, Saudi Arabia',
-                                    status: null,
-                                    rating: 4.7,
-                                    phoneNo: '966 50 324 7515',
-                                    screenMode:'coach'
-                                })
-                            }}
+                            <TouchableOpacity
+                                style={styles.btn}
+                                onPress={() => {
+                                    navigation.navigate('details', {
+                                        name: 'Hani Shobaki',
+                                        address: 'King Saud Street, Al Olaya, Riyadh 11411, Saudi Arabia',
+                                        status: null,
+                                        rating: 4.7,
+                                        phoneNo: '966 50 324 7515',
+                                        screenMode: 'coach'
+                                    })
+                                }}
                             >
                                 <Text style={{ color: '#fff' }}>VIEW MORE</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    
+
                     <View style={styles.card}>
-                        <Image style={styles.image} source={require('../../../assets/CoachImages/SEFA.jpg')}  />
+                        <Image style={styles.image} source={require('../../../assets/CoachImages/SEFA.jpg')} />
                         <View style={styles.details}>
                             <Text style={styles.head}>SEFA</Text>
                             <Text style={styles.para}> قرطبة،, Riyadh 13244, Saudi Arabia</Text>
-                            
+
                             <StarRating
                                 fullStarColor="#f3b149"
                                 starSize={20}
@@ -96,18 +97,18 @@ export default function HomeCoachesDetailsScreen({navigation, route}) {
                                     <Ionicons name="call" size={20} color="#f3b149" />
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity 
-                            style={styles.btn}
-                            onPress={() => {
-                                navigation.navigate('details', {
-                                    name: 'SEFA',
-                                    address: ' قرطبة، Riyadh 13244, Saudi Arabia',
-                                    status: null,
-                                    rating: 5,
-                                    phoneNo: '966 11 834 3080',
-                                    screenMode:'coach'
-                                })
-                            }}
+                            <TouchableOpacity
+                                style={styles.btn}
+                                onPress={() => {
+                                    navigation.navigate('details', {
+                                        name: 'SEFA',
+                                        address: ' قرطبة، Riyadh 13244, Saudi Arabia',
+                                        status: null,
+                                        rating: 5,
+                                        phoneNo: '966 11 834 3080',
+                                        screenMode: 'coach'
+                                    })
+                                }}
                             >
                                 <Text style={{ color: '#fff' }}>VIEW MORE</Text>
                             </TouchableOpacity>
@@ -115,11 +116,11 @@ export default function HomeCoachesDetailsScreen({navigation, route}) {
                     </View>
 
                     <View style={styles.card}>
-                        <Image style={styles.image} source={require('../../../assets/CoachImages/لارين.jpg')}  />
+                        <Image style={styles.image} source={require('../../../assets/CoachImages/لارين.jpg')} />
                         <View style={styles.details}>
                             <Text style={styles.head}>لارين</Text>
                             <Text style={styles.para}>طريق عثمان بن عفان الفرعي Saudi Arabia</Text>
-                            
+
                             <StarRating
                                 fullStarColor="#f3b149"
                                 starSize={20}
@@ -143,18 +144,18 @@ export default function HomeCoachesDetailsScreen({navigation, route}) {
                                     <Ionicons name="call" size={20} color="#f3b149" />
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity 
-                            style={styles.btn}
-                            onPress={() => {
-                                navigation.navigate('details', {
-                                    name: 'لارين',
-                                    address: 'طريق عثمان بن عفان الفرعي  Saudi Arabia',
-                                    status: null,
-                                    rating: 4.1,
-                                    phoneNo: '966 11 834 3005',
-                                    screenMode:'coach'
-                                })
-                            }}
+                            <TouchableOpacity
+                                style={styles.btn}
+                                onPress={() => {
+                                    navigation.navigate('details', {
+                                        name: 'لارين',
+                                        address: 'طريق عثمان بن عفان الفرعي  Saudi Arabia',
+                                        status: null,
+                                        rating: 4.1,
+                                        phoneNo: '966 11 834 3005',
+                                        screenMode: 'coach'
+                                    })
+                                }}
                             >
                                 <Text style={{ color: '#fff' }}>VIEW MORE</Text>
                             </TouchableOpacity>
@@ -166,7 +167,7 @@ export default function HomeCoachesDetailsScreen({navigation, route}) {
                         <View style={styles.details}>
                             <Text style={styles.head}>لا ڤال</Text>
                             <Text style={styles.para}>King Abdul Aziz Rd, An Nafal, Riyadh 13312, Saudi Arabia</Text>
-                            
+
                             <StarRating
                                 fullStarColor="#f3b149"
                                 starSize={20}
@@ -190,18 +191,18 @@ export default function HomeCoachesDetailsScreen({navigation, route}) {
                                     <Ionicons name="call" size={20} color="#f3b149" />
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity 
-                            style={styles.btn}
-                            onPress={() => {
-                                navigation.navigate('details', {
-                                    name: 'لا ڤال',
-                                    address: 'King Abdul Aziz Rd, An Nafal, Riyadh 13312, Saudi Arabia',
-                                    status: null,
-                                    rating: 3.7,
-                                    phoneNo: '966 50 324 7515',
-                                    screenMode:'coach'
-                                })
-                            }}
+                            <TouchableOpacity
+                                style={styles.btn}
+                                onPress={() => {
+                                    navigation.navigate('details', {
+                                        name: 'لا ڤال',
+                                        address: 'King Abdul Aziz Rd, An Nafal, Riyadh 13312, Saudi Arabia',
+                                        status: null,
+                                        rating: 3.7,
+                                        phoneNo: '966 50 324 7515',
+                                        screenMode: 'coach'
+                                    })
+                                }}
                             >
                                 <Text style={{ color: '#fff' }}>VIEW MORE</Text>
                             </TouchableOpacity>
@@ -209,11 +210,11 @@ export default function HomeCoachesDetailsScreen({navigation, route}) {
                     </View>
 
                     <View style={styles.card}>
-                        <Image style={styles.image} source={require('../../../assets/CoachImages/FitnessTime-OlayaViewFT.jpg')}  />
+                        <Image style={styles.image} source={require('../../../assets/CoachImages/FitnessTime-OlayaViewFT.jpg')} />
                         <View style={styles.details}>
                             <Text style={styles.head}>Fitness Time - Olaya View FT</Text>
                             <Text style={styles.para}>Olaya Street, Riyadh Saudi Arabia</Text>
-                            
+
                             <StarRating
                                 fullStarColor="#f3b149"
                                 starSize={20}
@@ -237,18 +238,18 @@ export default function HomeCoachesDetailsScreen({navigation, route}) {
                                     <Ionicons name="call" size={20} color="#f3b149" />
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity 
-                            style={styles.btn}
-                            onPress={() => {
-                                navigation.navigate('details', {
-                                    name: 'Fitness Time - Olaya View FT',
-                                    address: 'Olaya Street, Riyadh Saudi Arabia',
-                                    status: null,
-                                    rating: 4,
-                                    phoneNo: '966 9200 03131',
-                                    screenMode:'coach'
-                                })
-                            }}
+                            <TouchableOpacity
+                                style={styles.btn}
+                                onPress={() => {
+                                    navigation.navigate('details', {
+                                        name: 'Fitness Time - Olaya View FT',
+                                        address: 'Olaya Street, Riyadh Saudi Arabia',
+                                        status: null,
+                                        rating: 4,
+                                        phoneNo: '966 9200 03131',
+                                        screenMode: 'coach'
+                                    })
+                                }}
                             >
                                 <Text style={{ color: '#fff' }}>VIEW MORE</Text>
                             </TouchableOpacity>
@@ -256,11 +257,11 @@ export default function HomeCoachesDetailsScreen({navigation, route}) {
                     </View>
 
                     <View style={styles.card}>
-                        <Image style={styles.image} source={require('../../../assets/CoachImages/BodyMasters.jpg')}  />
+                        <Image style={styles.image} source={require('../../../assets/CoachImages/BodyMasters.jpg')} />
                         <View style={styles.details}>
                             <Text style={styles.head}>Body Masters</Text>
                             <Text style={styles.para}>Riyadh</Text>
-                            
+
                             <StarRating
                                 fullStarColor="#f3b149"
                                 starSize={20}
@@ -284,26 +285,23 @@ export default function HomeCoachesDetailsScreen({navigation, route}) {
                                     <Ionicons name="call" size={20} color="#f3b149" />
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity 
-                            style={styles.btn}
-                            onPress={() => {
-                                navigation.navigate('details', {
-                                    name: 'Body Masters',
-                                    address: 'Riyadh',
-                                    status: null,
-                                    rating: 5,
-                                    phoneNo: '966 9200 45881',
-                                    screenMode:'coach'
-                                })
-                            }}
+                            <TouchableOpacity
+                                style={styles.btn}
+                                onPress={() => {
+                                    navigation.navigate('details', {
+                                        name: 'Body Masters',
+                                        address: 'Riyadh',
+                                        status: null,
+                                        rating: 5,
+                                        phoneNo: '966 9200 45881',
+                                        screenMode: 'coach'
+                                    })
+                                }}
                             >
                                 <Text style={{ color: '#fff' }}>VIEW MORE</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-
-
-
                 </View>
             </ScrollView>
         </View>
@@ -353,10 +351,10 @@ const styles = StyleSheet.create({
     image: {
         height: 150,
         width: '40%',
-    
+
         borderRadius: 20,
-       
-    
+
+
 
     },
     head: {
@@ -378,15 +376,15 @@ const styles = StyleSheet.create({
         width: 150,
         backgroundColor: "#f3b149",
         borderRadius: 20,
-        margin:5,
+        margin: 5,
         marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: "center"
     },
-    details:{
-        height:'auto',
-        width:'50%',
-        
+    details: {
+        height: 'auto',
+        width: '50%',
+
     }
 });

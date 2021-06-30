@@ -1,28 +1,55 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
-
-
+import { auth, db, getAllUsers } from '../../Config/firebase';
+import firebase from 'firebase/app';
+import "firebase/firestore";
 export default function ProfileScreen({ navigation, route }) {
+    const [currentUser, setCurrentUser] = useState('')
+    useEffect(() => {
+        firebase.firestore().collection('allUsers').get()
+            .then(snapshot => {
+                var arr = [];
+                snapshot.forEach(doc => {
 
+                    arr.push({ ...doc.data() })
+
+                    arr.map(docs => {
+                        if (route.params.userID.uid === docs.userID) {
+                            console.log(docs)
+                            setCurrentUser(docs)
+
+                        }
+                    })
+
+
+
+                })
+
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+    }, [])
     const [loaded] = useFonts({
         OpenSans: require('../../../assets/Open_Sans/OpenSans-Regular.ttf')
     });
+
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.avatar}>
-                    <Text style={{ color: "#fff", fontSize: 65, fontWeight: 'bold' }}>MJ</Text>
+                    <Text style={{ color: "#fff", fontSize: 65, fontWeight: 'bold' }}>{currentUser ? currentUser.fullName.charAt(0) : '--'}</Text>
                 </View>
             </View>
             <View style={styles.main}>
-                <Text style={styles.head}>Muhammad Jabir</Text>
-                <Text style={styles.para}>XYZ@gmail.com</Text>
+                <Text style={styles.head}>{currentUser ? currentUser.fullName : '--'}</Text>
+                <Text style={styles.para}>{currentUser ? currentUser.email : '--'}</Text>
                 <TouchableOpacity
                     style={styles.btn}
-                    onPress={() => { route.params.x(false) }}>
+                    onPress={() => { auth.signOut() }}>
                     <Text style={{
                         fontSize: 20,
                         color: '#fff',
@@ -31,8 +58,6 @@ export default function ProfileScreen({ navigation, route }) {
                     }}>Log out</Text>
                 </TouchableOpacity>
             </View>
-
-
             <StatusBar style="auto" />
         </View>
     );
@@ -70,13 +95,13 @@ const styles = StyleSheet.create({
     header: {
         flex: 4,
         width: '100%',
-       
+
         justifyContent: 'center'
     },
     main: {
         flex: 6,
         width: '100%',
-      
+
         alignItems: 'center',
         padding: 15
     },

@@ -1,19 +1,47 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import headIcon from '../../../assets/ic_login.png';
 import { Foundation, Entypo, AntDesign } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
-
+import { signUpUser } from '../../Config/firebase';
 export default function SignupScreen({ navigation, route }) {
-    
+
     navigation.setOptions({ tabBarVisible: false })
 
     const [onFocusValue, setOnFocusValue] = useState('false')
     const [showloader, setShowLoader] = useState(false)
+    const [email, setEmail] = useState('')
+    const [password, setpassword] = useState('')
+    const [fullName, setfullName] = useState('')
+    const [repPassword, setRepPassword] = useState('')
+
     const [loaded] = useFonts({
         OpenSans: require('../../../assets/Open_Sans/OpenSans-Regular.ttf')
     });
+    const signingUp = (email, password, fullName) => {
+        if (password === repPassword) {
+            signUpUser(email, password, fullName)
+            return
+        }
+        else {
+            Alert.alert(
+                "ERROR",
+                "Password do not match!",
+                [
+                    {
+                        text: "",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                    },
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ],
+                { cancelable: false }
+            );
+        }
+
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -33,7 +61,8 @@ export default function SignupScreen({ navigation, route }) {
                                 onFocus={() => { setOnFocusValue('namefocus') }}
                                 onBlur={() => { setOnFocusValue(false) }}
                                 style={styles.input}
-                                placeholder="Full Name" />
+                                placeholder="Full Name"
+                                onChangeText={(text) => { setfullName(text) }} />
                         </View>
                     </View>
                     <View style={onFocusValue === 'emailfocus' ? styles.onfocus : styles.inputContainer}>
@@ -44,7 +73,9 @@ export default function SignupScreen({ navigation, route }) {
                                 onFocus={() => { setOnFocusValue('emailfocus') }}
                                 onBlur={() => { setOnFocusValue(false) }}
                                 style={styles.input}
-                                placeholder="Email" />
+                                placeholder="Email"
+                                onChangeText={(text) => { setEmail(text) }}
+                            />
                         </View>
                     </View>
                     <View style={onFocusValue === 'pswrdfocus' ? styles.onfocus : styles.inputContainer}>
@@ -55,7 +86,10 @@ export default function SignupScreen({ navigation, route }) {
                                 onFocus={() => { setOnFocusValue('pswrdfocus') }}
                                 onBlur={() => { setOnFocusValue(false) }}
                                 style={styles.input}
-                                placeholder="Password" />
+                                placeholder="Password"
+                                secureTextEntry
+                                onChangeText={(text) => { setpassword(text) }}
+                            />
                         </View>
                     </View>
                     <View style={onFocusValue === 'reppswrdfocus' ? styles.onfocus : styles.inputContainer}>
@@ -68,7 +102,9 @@ export default function SignupScreen({ navigation, route }) {
                                 onFocus={() => { setOnFocusValue('reppswrdfocus') }}
                                 onBlur={() => { setOnFocusValue(false) }}
                                 style={styles.input}
-                                placeholder="Repeat Password" />
+                                placeholder="Repeat Password"
+                                secureTextEntry
+                                onChangeText={(text) => { setRepPassword(text) }} />
                         </View>
                     </View>
                     {!showloader ? <TouchableOpacity
@@ -76,12 +112,9 @@ export default function SignupScreen({ navigation, route }) {
                         onPress={() => {
                             console.log('TRUEEEE')
                             setShowLoader(true)
-                            setTimeout(() => {
-                                setShowLoader(false)
-                                route.params.x(true)
+                            signingUp(email, password, fullName)
+                            setShowLoader(false)
 
-
-                            }, 2000)
                         }}>
                         <Text style={{ color: "#fff", fontFamily: 'OpenSans', fontSize: 15 }}>SIGN UP </Text>
                         <AntDesign name="arrowright" size={15} color="#FFF" />

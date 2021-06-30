@@ -1,44 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TextInput, Modal, ScrollView, TouchableOpacity, Linking, Platform, TouchableHighlight } from 'react-native';
 import { Foundation, Entypo, AntDesign, Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import StarRating from 'react-native-star-rating';
-
-
-
+import nodataimg from '../../../assets/X.png'
 export default function DetailScreen({ navigation, route }) {
-    if(route.params===undefined){
-        return null
+    if (route.params === undefined) { 
+        return <View style={styles.container}>
+            <Image style={{height:200, width:200}} source={nodataimg} />
+            <Text style={styles.para}>SELECT GYM OR COACH FIRST!</Text>
+        </View>
     }
-   
-    console.log(route.params)
-
-    useEffect(() => {
-        console.log('first')
-        return () => {
-            console.log('ded')
-        }
-    }, []);
-    
-
-
-
-
-
-
-
     const [modalVisible, setModalVisible] = useState(false);
-
     const [loaded] = useFonts({
         OpenSans: require('../../../assets/Open_Sans/OpenSans-Regular.ttf')
     });
-
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-
-            </View>
+            <View style={styles.header}></View>
             <ScrollView
                 style={{ width: '90%', flex: 6 }}
                 showsVerticalScrollIndicator={false}
@@ -76,7 +56,7 @@ export default function DetailScreen({ navigation, route }) {
                     <Text style={{ fontSize: 15, textAlign: 'left', fontFamily: 'OpenSans', fontWeight: 'bold', color: "gray" }}>CONVENIENTLY LOCATED GOOD AESTHETICS PLENTY OF ROOMS</Text>
                 </View>
                 {
-                    route.params.screenMode=== 'gym' ?
+                    route.params.screenMode === 'gym' ?
                         <>
                             <View style={styles.imageContainer}>
                                 <Image style={styles.image} source={require('../../../assets/GymImages/gym1.jpg')} />
@@ -96,14 +76,6 @@ export default function DetailScreen({ navigation, route }) {
                             </View>
                         </>
                 }
-
-
-
-
-
-
-
-
                 <TouchableOpacity
                     onPress={() => {
                         setModalVisible(true);
@@ -151,18 +123,9 @@ export default function DetailScreen({ navigation, route }) {
                             }}>
                             <Text style={{ color: "#fff" }}>SUBMIT</Text>
                         </TouchableHighlight>
-
-
-
-
-
                     </View>
                 </View>
             </Modal>
-
-
-
-
         </View>
     );
 }
@@ -214,14 +177,7 @@ const styles = StyleSheet.create({
         padding: 35,
         justifyContent: 'center',
         alignItems: 'center',
-        // shadowColor: '#000',
-        // shadowOffset: {
-        //     width: 0,
-        //     height: 2,
-        // },
-        // shadowOpacity: 0.25,
-        // shadowRadius: 3.84,
-        // elevation: 5,
+        
     },
     openButton: {
         backgroundColor: '#F194FF',
