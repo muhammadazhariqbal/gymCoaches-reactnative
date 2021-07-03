@@ -1,18 +1,31 @@
-
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, Modal, ScrollView, TouchableOpacity, Linking, Platform, TouchableHighlight } from 'react-native';
-import { Foundation, Entypo, AntDesign, Ionicons } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, TextInput, Modal, ScrollView, TouchableOpacity, Linking, TouchableHighlight } from 'react-native';
+import { Entypo, Ionicons } from '@expo/vector-icons';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useFonts } from 'expo-font';
 import StarRating from 'react-native-star-rating';
 import nodataimg from '../../../assets/X.png'
 export default function DetailScreen({ navigation, route }) {
-    if (route.params === undefined) { 
+    const [detailFormName, setDetailFormName] = useState('')
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [userDate, setUserDate] = useState('')
+    const [modalVisible, setModalVisible] = useState(false);
+    const handleConfirmTime = (date) => {
+        var arr = {
+            day: date.getDay().toString(),
+            month: date.getMonth().toString(),
+            year: date.getFullYear().toString(),
+            hour: date.getHours().toString(),
+            min: date.getMinutes().toString()
+        }
+        setUserDate(arr)
+    }
+    if (route.params === undefined) {
         return <View style={styles.container}>
-            <Image style={{height:200, width:200}} source={nodataimg} />
+            <Image style={{ height: 200, width: 200 }} source={nodataimg} />
             <Text style={styles.para}>SELECT GYM OR COACH FIRST!</Text>
         </View>
     }
-    const [modalVisible, setModalVisible] = useState(false);
     const [loaded] = useFonts({
         OpenSans: require('../../../assets/Open_Sans/OpenSans-Regular.ttf')
     });
@@ -76,9 +89,12 @@ export default function DetailScreen({ navigation, route }) {
                             </View>
                         </>
                 }
+
                 <TouchableOpacity
                     onPress={() => {
+                        setDetailFormName(route.params.name)
                         setModalVisible(true);
+                        setDatePickerVisibility(false)
                     }} style={styles.btn}>
                     <Text style={{ color: '#fff' }}>BOOK NOW</Text>
 
@@ -87,44 +103,70 @@ export default function DetailScreen({ navigation, route }) {
 
             <Modal
                 animationType="fade"
-
                 visible={modalVisible}
                 presentationStyle="fullScreen"
                 onRequestClose={() => {
                     Alert.alert('Modal has been closed.');
                 }}>
-                <View style={{ marginTop: 20 }}>
-                    <TouchableHighlight
-                        style={{ marginLeft: 'auto' }}
-                        onPress={() => {
-                            setModalVisible(!modalVisible);
-                        }}>
-                        <Entypo name="cross" size={40} color="#f3b149" />
-                    </TouchableHighlight>
-                    <View style={styles.modalView}>
-
-
-                        <Text style={styles.head}>BOOK NOW!</Text>
-                        <Text style={styles.para}>Please fill out the information below to complete your online booking.</Text>
-
-                        <View style={styles.inputContainer}>
-                            <TextInput style={styles.input} placeholder="Your Name" />
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <TextInput style={styles.input} placeholder="Description" />
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <TextInput style={styles.input} keyboardType="numeric" placeholder="Your Number" />
-                        </View>
+                <ScrollView>
+                    <View style={{ marginTop: 20 }}>
                         <TouchableHighlight
-                            style={styles.btn}
+                            style={{ marginLeft: 'auto' }}
                             onPress={() => {
                                 setModalVisible(!modalVisible);
                             }}>
-                            <Text style={{ color: "#fff" }}>SUBMIT</Text>
+                            <Entypo name="cross" size={40} color="#f3b149" />
                         </TouchableHighlight>
+                        <View style={styles.modalView}>
+
+                            <Text style={styles.head}>{detailFormName}</Text>
+                            <Text style={styles.head}>BOOK NOW!</Text>
+                            <Text style={styles.para}>Please fill out the information below to complete your online booking.</Text>
+
+                            <View style={styles.inputContainer}>
+                                <TextInput style={styles.input} placeholder="Your Name" />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TextInput style={styles.input} placeholder="Description" />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TextInput style={styles.input} keyboardType="numeric" placeholder="Your Number" />
+                            </View>
+
+
+                            <View style={styles.inputContainer}>
+                                <Text style={{ color: 'gray' }}>Date : {userDate.day ? userDate.day : '--'}/{userDate.month ? userDate.month : '--'}/{userDate.year ? userDate.year : '--'}</Text>
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <Text style={{ color: 'gray' }}>Time : {userDate.hour ? userDate.hour : '--'} Hour {userDate.min ? userDate.min : '--'} Min</Text>
+                            </View>
+
+
+
+
+
+                            <View>
+                                <TouchableOpacity onPress={() => { setDatePickerVisibility(true) }}>
+                                    <Text style={{ color: '#f3b149', fontFamily: 'OpenSans', fontSize: 15, fontWeight: 'bold', marginTop: 10 }}>SELECT DATE & TIME</Text>
+                                </TouchableOpacity>
+
+                                <DateTimePickerModal
+                                    isVisible={isDatePickerVisible}
+                                    mode="datetime"
+                                    onConfirm={handleConfirmTime}
+                                    onCancel={() => { setDatePickerVisibility(false) }}
+                                />
+                            </View>
+                            <TouchableHighlight
+                                style={styles.btn}
+                                onPress={() => {
+                                    setModalVisible(false);
+                                }}>
+                                <Text style={{ color: "#fff" }}>SUBMIT</Text>
+                            </TouchableHighlight>
+                        </View>
                     </View>
-                </View>
+                </ScrollView>
             </Modal>
         </View>
     );
@@ -177,7 +219,7 @@ const styles = StyleSheet.create({
         padding: 35,
         justifyContent: 'center',
         alignItems: 'center',
-        
+
     },
     openButton: {
         backgroundColor: '#F194FF',

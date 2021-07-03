@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useFonts } from 'expo-font';
-import { auth, db, getAllUsers } from '../../Config/firebase';
+import { auth } from '../../Config/firebase';
 import firebase from 'firebase/app';
 import "firebase/firestore";
 export default function ProfileScreen({ navigation, route }) {
@@ -12,24 +12,29 @@ export default function ProfileScreen({ navigation, route }) {
             .then(snapshot => {
                 var arr = [];
                 snapshot.forEach(doc => {
-
                     arr.push({ ...doc.data() })
-
                     arr.map(docs => {
                         if (route.params.userID.uid === docs.userID) {
-                            console.log(docs)
+                           
                             setCurrentUser(docs)
-
                         }
                     })
-
-
-
                 })
-
             })
             .catch(error => {
-                console.log(error.message)
+                Alert.alert(
+                    "ERROR",
+                    error.message,
+                    [
+                      {
+                        text: "",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                      },
+                      { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ],
+                    { cancelable: false }
+                  );
             })
     }, [])
     const [loaded] = useFonts({

@@ -47,7 +47,7 @@ const signUpUser = (email, password, fullName) => {
         userID
 
       })
-        .then((rES) => { console.log('data stored!') })
+        .then((res) => {console.log(res)})
         .catch(error => { console.log(`error  ${error.message}`) })
 
 
